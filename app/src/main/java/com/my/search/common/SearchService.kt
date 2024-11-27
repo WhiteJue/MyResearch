@@ -4,16 +4,18 @@ import com.my.search.model.SearchItemResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 import retrofit2.http.Query
 
 //用于Retrofit构建动态代理
 interface SearchService {
-    fun search(@Query("query") query: String) : Call<SearchItemResponse>
+    @GET("search")
+    fun search(@Query("query") query: String, @Query("count") count: Int) : Call<SearchItemResponse>
 }
 
 
 object ServiceCreator {
-    private const val BASE_URL = "https://api.caiyunapp.com/"
+    private const val BASE_URL = "http://8.217.125.218:9060/"
     //使用JSON
     private val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())

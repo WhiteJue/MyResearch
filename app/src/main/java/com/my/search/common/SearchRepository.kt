@@ -3,34 +3,39 @@ package com.my.search.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.my.search.model.SearchItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 
 object SearchRepository {
-    fun search(query: String): LiveData<Result<List<SearchItem>>> = liveData(Dispatchers.IO) {
+    fun search(query: String, count: Int): LiveData<Result<List<SearchItem>>> = liveData(Dispatchers.IO) {
         //子线程中执行
         val result = try {
             //调用API
-            val placeResponse = SearchNetwork.search(query)
-            if(placeResponse.status == "ok") {
-                val places = placeResponse.places
-                Result.success(places)
+            val items = SearchNetwork.search(query, count) as List<SearchItem>
+            if(items.isNotEmpty()) {
+                Result.success(items)
             } else {
-                Result.failure(RuntimeException("response status is ${placeResponse.status}"))
+                //本地数据兜底
+                Result.success(dataMock())
+                //Result.failure(RuntimeException("response unexpected"))
             }
         } catch (e: Exception) {
-            Result.failure<List<SearchItem>>(e)
+            //本地数据兜底
+            Result.success(dataMock())
+            //Result.failure<List<SearchItem>>(e)
         }
         //emit方法构建LiveData
         emit(result)
     }
 
-    //Mock
-    fun searchTest(query: String): LiveData<Result<List<SearchItem>>> = liveData(Dispatchers.IO) {
-        delay(1000 * 3)
-        val itemList : List<SearchItem> = mutableListOf<SearchItem>().also {
+    fun dataMock() : List<SearchItem> {
+        return mutableListOf<SearchItem>().also {
             val il = it
-            repeat(5) {
+            repeat(3) {
                 il.addAll(
                     listOf(
                         SearchItem(
@@ -47,13 +52,13 @@ object SearchRepository {
                         ),
                         SearchItem(
                             "789",
-                            "https://raw.githubusercontent.com/facebook/fresco/main/docs/static/logo.png",
+                            "https://cdn-images-1.medium.com/max/2000/1*wUcMnW5qarNCTDk7T7918g.jpeg",
                             0,
                             "https://v.douyin.com/iDSegyfp/"
                         ),
                         SearchItem(
                             "101112",
-                            "https://raw.githubusercontent.com/facebook/fresco/main/docs/static/logo.png",
+                            "https://cdn-images-1.medium.com/max/2000/1*wUcMnW5qarNCTDk7T7918g.jpeg",
                             0,
                             "https://v.douyin.com/iDSegyfp/"
                         )
@@ -61,6 +66,11 @@ object SearchRepository {
                 )
             }
         }
-        emit(Result.success(itemList))
+    }
+
+    //本地Mock数据（延迟3s，固定12条数据，count参数忽略）
+    fun searchMock(query: String, count: Int): LiveData<Result<List<SearchItem>>> = liveData(Dispatchers.IO) {
+        delay(1000 * 3)
+        emit(Result.success(dataMock()))
     }
 }

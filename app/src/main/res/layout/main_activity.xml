@@ -9,7 +9,7 @@
         android:id="@+id/main_fragment_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.my.search.ui.SearchBarFragment"/>
+        android:name="com.my.search.ui.search_page.SearchBarFragment"/>
 
     <LinearLayout
         android:id="@+id/main_tab_root_layout"
@@ -19,14 +19,14 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_layout"
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"/>
         <LinearLayout
             android:id="@+id/main_tab_right_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp">
             <ImageButton
                 android:id="@+id/main_tab_dual_button"
                 android:layout_width="20dp"

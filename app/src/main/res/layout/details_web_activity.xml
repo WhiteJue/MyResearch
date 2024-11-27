@@ -5,9 +5,99 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsWebActivity">
+    tools:context=".ui.details_page.DetailsWebActivity">
+    <LinearLayout
+        android:id="@+id/web_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBaseline_toTopOf="parent">
+        <ImageButton
+            android:id="@+id/web_bar_back_image_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/back"
+            android:paddingVertical="10dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/web_bar_close_image_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/close"
+            android:paddingVertical="10dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:background="@null"/>
+        <TextView
+            android:id="@+id/web_bar_title_text_view"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:text="WebBar标题"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:background="@color/transparent"
+            tools:text="123456789123456789123456789123456789"/>
+    </LinearLayout>
+
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/web_bar_layout"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/web_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/web_view"
+        app:layout_constraintTop_toBottomOf="@+id/web_bar_layout"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/web_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/web_view"
+        app:layout_constraintTop_toBottomOf="@+id/web_bar_layout"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:clickable="true"
+        android:focusable="true">
+        <ImageView
+            android:id="@+id/web_error_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/error" />
+        <TextView
+            android:id="@+id/web_error_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            tools:text="123456"/>
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

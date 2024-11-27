@@ -12,9 +12,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.my.search.ui.SearchPageFragment
-import com.my.search.ui.SearchPageViewModel
-import com.my.search.ui.SearchViewPageAdapter
+import com.my.search.ui.search_page.SearchPageFragment
+import com.my.search.ui.search_page.SearchPageViewModel
+import com.my.search.ui.search_page.SearchViewPageAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,11 +63,11 @@ class MainActivity : AppCompatActivity() {
         return supportFragmentManager.findFragmentByTag("f" + viewPager.currentItem) as? SearchPageFragment
     }
 
-    fun search() {
+    fun search(query: String) {
         hideSoftInput()
         viewPager.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
-        viewModel.search("1")
+        viewModel.search(query)
     }
 
     fun searchOver() {

@@ -34,4 +34,4 @@ data class SearchItem(val title: String, val imageUrl: String, val type: Int, va
     }
 }
 
-data class SearchItemResponse(val status: String, val places: List<SearchItem>)
+class SearchItemResponse() : ArrayList<SearchItem>()

@@ -8,7 +8,7 @@ import kotlin.coroutines.*
 object SearchNetwork {
 
     private val searchService = ServiceCreator.create<SearchService>()
-    suspend fun search(query: String) = searchService.search(query).await()
+    suspend fun search(query: String, count: Int) = searchService.search(query, count).await()
 
     //扩展方法：从Call<T>获取结果（await），需要从协程调用
     private suspend fun <T> Call<T>.await(): T {
